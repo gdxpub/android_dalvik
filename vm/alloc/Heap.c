@@ -37,13 +37,14 @@
 #include <limits.h>
 #include <errno.h>
 
-static const char* GcReasonStr[] = {
-    [GC_FOR_MALLOC] = "GC_FOR_MALLOC",
-    [GC_CONCURRENT] = "GC_CONCURRENT",
-    [GC_EXPLICIT] = "GC_EXPLICIT",
-    [GC_EXTERNAL_ALLOC] = "GC_EXTERNAL_ALLOC",
-    [GC_HPROF_DUMP_HEAP] = "GC_HPROF_DUMP_HEAP"
-};
+// dx: be quiet pls
+/*static const char* GcReasonStr[] = {*/
+/*    [GC_FOR_MALLOC] = "GC_FOR_MALLOC",*/
+/*    [GC_CONCURRENT] = "GC_CONCURRENT",*/
+/*    [GC_EXPLICIT] = "GC_EXPLICIT",*/
+/*    [GC_EXTERNAL_ALLOC] = "GC_EXTERNAL_ALLOC",*/
+/*    [GC_HPROF_DUMP_HEAP] = "GC_HPROF_DUMP_HEAP"*/
+/*};*/
 
 /*
  * Initialize the GC heap.
@@ -912,32 +913,34 @@ void dvmCollectGarbageInternal(bool clearSoftRefs, GcReason reason)
     percentFree = 100 - (size_t)(100.0f * (float)currAllocated / currFootprint);
     if (reason != GC_CONCURRENT) {
         u4 markSweepTime = dirtyEnd - rootStart;
-        bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
+//        bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
         totalTime = rootSuspendTime + markSweepTime;
-        LOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, external %zdK/%zdK, "
-             "paused %ums",
-             GcReasonStr[reason],
-             isSmall ? "<" : "",
-             numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,
-             percentFree,
-             currAllocated / 1024, currFootprint / 1024,
-             extAllocated / 1024, extLimit / 1024,
-             markSweepTime);
+        // dx: be quiet pls
+/*        LOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, external %zdK/%zdK, "*/
+/*             "paused %ums",*/
+/*             GcReasonStr[reason],*/
+/*             isSmall ? "<" : "",*/
+/*             numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,*/
+/*             percentFree,*/
+/*             currAllocated / 1024, currFootprint / 1024,*/
+/*             extAllocated / 1024, extLimit / 1024,*/
+/*             markSweepTime);*/
     } else {
         u4 rootTime = rootEnd - rootStart;
         u4 dirtySuspendTime = dirtyStart - dirtySuspend;
         u4 dirtyTime = dirtyEnd - dirtyStart;
-        bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
+//        bool isSmall = numBytesFreed > 0 && numBytesFreed < 1024;
         totalTime = rootSuspendTime + rootTime + dirtySuspendTime + dirtyTime;
-        LOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, external %zdK/%zdK, "
-             "paused %ums+%ums",
-             GcReasonStr[reason],
-             isSmall ? "<" : "",
-             numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,
-             percentFree,
-             currAllocated / 1024, currFootprint / 1024,
-             extAllocated / 1024, extLimit / 1024,
-             rootTime, dirtyTime);
+        // dx: be quiet pls
+/*        LOGD("%s freed %s%zdK, %d%% free %zdK/%zdK, external %zdK/%zdK, "*/
+/*             "paused %ums+%ums",*/
+/*             GcReasonStr[reason],*/
+/*             isSmall ? "<" : "",*/
+/*             numBytesFreed ? MAX(numBytesFreed / 1024, 1) : 0,*/
+/*             percentFree,*/
+/*             currAllocated / 1024, currFootprint / 1024,*/
+/*             extAllocated / 1024, extLimit / 1024,*/
+/*             rootTime, dirtyTime);*/
     }
     dvmLogGcStats(numObjectsFreed, numBytesFreed, totalTime);
     if (gcHeap->ddmHpifWhen != 0) {
